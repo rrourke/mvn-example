@@ -10,4 +10,11 @@ public class BApplication {
         SpringApplication.run(BApplication.class, args);
     }
 
+
+
+
+    public int A() {
+        return 1;
+    }
+
 }
