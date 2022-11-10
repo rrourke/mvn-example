@@ -17,4 +17,8 @@ public class BApplication {
         return 1;
     }
 
+    public int test() {
+        return 2;
+    }
+
 }
