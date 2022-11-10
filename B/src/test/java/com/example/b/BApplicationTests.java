@@ -21,7 +21,7 @@ class BApplicationTests {
     @Test
     public void doesItWork() {
         assertEquals(1, b.A());
-        System.out.println("HEREIAMONCEAGAIN\n\n\n\n\n\n\n\n\n\n\n");
+        assertEquals(2, b.test());
     }
 
 }
