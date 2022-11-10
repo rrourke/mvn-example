@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.5</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.example</groupId>
+    <artifactId>demo</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>demo</name>
+    <description>demo</description>
+
+    <modules>
+        <module>A</module>
+        <module>B</module>
+        <module>C</module>
+    </modules>
+    <packaging>pom</packaging>
+
+    <properties>
+        <java.version>11</java.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>0.8.7</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.github.surpsg</groupId>
+                    <artifactId>diff-coverage-maven-plugin</artifactId>
+                    <version>0.3.2-SNAPSHOT</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin><plugin>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <executions>
+                <execution>
+                    <id>prepare-agent</id>
+                    <goals>
+                        <goal>prepare-agent</goal>
+                    </goals>
+                    <configuration>
+                        <propertyName>jacocoArgLine</propertyName>
+                        <includes>
+                            <include>A.*</include>
+                            <include>B.*</include>
+                            <include>C.*</include>
+                        </includes>
+                    </configuration>
+                </execution>
+                <execution>
+                    <id>check</id>
+                    <phase>test</phase>
+                    <goals>
+                        <goal>check</goal>
+                    </goals>
+                    <configuration>
+                        <rules>
+                        <!-- Ensure minimum lines covered at project level for some projects. mvn artifactid is used to identify project -->
+                            <rule>
+                                <includes>
+                                    <include>A</include>
+                                </includes>
+                                <element>BUNDLE</element>
+                                <limits>
+                                    <limit>
+                                        <counter>LINE</counter>
+                                        <value>COVEREDRATIO</value>
+                                        <minimum>0.68</minimum>
+                                    </limit>
+                                </limits>
+                            </rule>
+                            <rule>
+                                <includes>
+                                    <include>B</include>
+                                </includes>
+                                <element>BUNDLE</element>
+                                <limits>
+                                    <limit>
+                                        <counter>LINE</counter>
+                                        <value>COVEREDRATIO</value>
+                                        <minimum>0.68</minimum>
+                                    </limit>
+                                </limits>
+                            </rule>
+                            <rule>
+                                <includes>
+                                    <include>C</include>
+                                </includes>
+                                <element>BUNDLE</element>
+                                <limits>
+                                    <limit>
+                                        <counter>LINE</counter>
+                                        <value>COVEREDRATIO</value>
+                                        <minimum>0.68</minimum>
+                                    </limit>
+                                </limits>
+                            </rule>
+                        </rules>
+                    </configuration>
+                </execution>
+                <execution>
+                    <id>coverage-report</id>
+                    <phase>post-integration-test</phase>
+                    <goals>
+                        <goal>report</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+            <plugin>
+                <groupId>com.github.surpsg</groupId>
+                <artifactId>diff-coverage-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>diffCoverage</goal>
+                        </goals>
+                        <id>github</id>
+                        <configuration>
+                            <!-- Required. diff content source. only one of file, URL or Git is allowed -->
+                            <diffSource>
+                                <git>origin/master</git>
+                            </diffSource>
+
+
+
+                            <!-- Optional -->
+                            <violations>
+                                <!-- Default 'false'. Fail build if violation rules weren't met  -->
+                                <failOnViolation>true</failOnViolation>
+
+                                <!-- Sets min coverage rule for: instructions, lines, branches -->
+                                <!-- <minCoverage>0.8</minCoverage> -->
+
+                                <!-- Each rule could be configured separately -->
+                                <!-- Default '0.0'. If value is '0.0' then the rule is disabled -->
+                                <!-- The percentage of lines to  be code coveraged -->
+                                <minLines>.8</minLines>
+                                <!-- The min percentage of branches that need to be covered -->
+                                <minBranches>.8</minBranches>
+                                <!-- byte code -->
+                                <minInstructions>.8</minInstructions>
+                            </violations>
+
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
